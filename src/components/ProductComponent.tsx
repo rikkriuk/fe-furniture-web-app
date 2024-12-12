@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { ProductState } from "../types/Product";
 import { useAppDispatch } from "../redux/store";
 import { getProducts } from "../redux/slice/ProductSlice";
+import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -85,25 +86,17 @@ const ProductComponent: React.FC = (): JSX.Element => {
         )}
       </div>
 
-      <div className="flex justify-center items-center gap-10 mb-10">
-        <button onClick={handlePrev} disabled={currentPage === 1}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g opacity="0.2">
-              <path d="M19 12L5 12" stroke="#23262F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M12 19L5 12L12 5" stroke="#23262F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </g>
-          </svg>
+      <div className="flex justify-center items-center gap-10 mb-10 lg:text-2xl">
+        <button className={`${currentPage === 1 ? "text-gray-400" : "text-gray-900"}`} onClick={handlePrev} disabled={currentPage === 1}>
+          <AiOutlineArrowLeft />
         </button>
 
         <div className="flex items-center">
           {totalPages && renderPageDots()}
         </div>
 
-        <button onClick={handleNext} disabled={currentPage === totalPages}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5 12H19" stroke="#23262F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M12 5L19 12L12 19" stroke="#23262F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+        <button className={`${currentPage === totalPages ? "text-gray-400" : "text-gray-900"}`} onClick={handleNext} disabled={currentPage === totalPages}>
+          <AiOutlineArrowRight />
         </button>
       </div>
     </div>

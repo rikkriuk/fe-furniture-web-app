@@ -11,7 +11,6 @@ const DataComponent: React.FC = (): JSX.Element => {
 
    useEffect(() => {
       dispatch(getAllData())
-      console.log(data);
    }, []);
 
    if (loading) {

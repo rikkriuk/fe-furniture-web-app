@@ -12,7 +12,6 @@ const HeroComponent: React.FC = (): JSX.Element => {
 
    useEffect(() => {
       dispatch(getHeroData());
-      console.log(hero);
    }, []);
 
    if (loading) {

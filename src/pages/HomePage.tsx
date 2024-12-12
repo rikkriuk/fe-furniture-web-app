@@ -5,6 +5,7 @@ import StoreContainer from "../containers/StoreContainer";
 import FurnitureContainer from "../containers/FurnitureContainer";
 import ProductContainer from "../containers/ProductContainer";
 import TestimonialContainer from "../containers/TestimonialContainer";
+import BannerContainer from "../containers/BannerContainer";
 
 const HomePage: React.FC = (): JSX.Element => {
    return (
@@ -15,6 +16,7 @@ const HomePage: React.FC = (): JSX.Element => {
          <FurnitureContainer />
          <ProductContainer />
          <TestimonialContainer />
+         <BannerContainer />
       </main>
    )
 }
