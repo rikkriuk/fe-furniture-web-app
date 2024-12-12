@@ -3,3 +3,7 @@
 body {
   font-family: "Saira", sans-serif;
 }
+
+.category-list::-webkit-scrollbar {
+  display: none;
+}

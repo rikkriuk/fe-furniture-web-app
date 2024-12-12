@@ -3,14 +3,14 @@ import ServiceImage from "../assets/services-image.png";
 
 const ServicesComponent:React.FC = ():JSX.Element => {
    return (
-      <div data-testid={"services-container"} className="px-5 lg:px-32 flex justify-evenly flex-col-reverse lg:flex-row">
+      <div data-testid={"services-container"} className="px-5 lg:px-32 flex justify-evenly flex-col-reverse lg:flex-row items-center">
          <div className="mt-10">
             <img src={ServiceImage} alt="service-image" className="w-[650px]" />
          </div>
 
          <div>
             <div className="flex flex-col gap-3">
-               <h3 className="font-semibold text-2xl lg:text-[40px] text-[#23262F] max-w-md">We Create your home more aestetic</h3>
+               <h3 className="font-semibold text-2xl lg:text-[40px] text-[#23262F] max-w-md leading-normal">We Create your home more aestetic</h3>
                <p className="text-[#23262F] font-normal text-sm lg:text-xl max-w-xl">Furnitre power is a software as services for multiperpose business management system, </p>
             </div>
 
