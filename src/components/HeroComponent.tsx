@@ -28,7 +28,7 @@ const HeroComponent: React.FC = (): JSX.Element => {
          <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white to-transparent"></div>
          
          <div className="px-14 relative flex justify-center items-center flex-col gap-10 z-10 h-full">
-            <h2 className="max-w-6xl font-semibold text-2xl lg:text-[64px] leading-normal text-[#FFFFFF] text-center line-height-12">
+            <h2 className="max-w-5xl font-semibold text-2xl lg:text-[64px] leading-tight text-[#FFFFFF] text-center">
                {hero?.title}
             </h2>
             <p className="font-normal text-sm lg:text-xl text-[#FFFFFF] text-center max-w-2xl">

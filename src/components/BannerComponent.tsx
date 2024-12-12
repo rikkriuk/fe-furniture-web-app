@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { BannerState } from "../types/Banner";
 import { useAppDispatch } from "../redux/store";
 import { postEmail, resetSuccess } from "../redux/slice/BannerSlice";
+import DOMPurify from "dompurify";
 
 const BannerComponent: React.FC = (): JSX.Element => {
   const data = useSelector((state: { banner: BannerState }) => state.banner);
@@ -12,27 +13,44 @@ const BannerComponent: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-   if (succces) {
-     setEmail("");
-     const timer = setTimeout(() => {
-       dispatch(resetSuccess());
-     }, 2000);
-     return () => clearTimeout(timer);
-   }
- }, [succces, dispatch]);
+    if (succces) {
+      setEmail("");
+      const timer = setTimeout(() => {
+        dispatch(resetSuccess());
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [succces, dispatch]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>):void => {
-   e.preventDefault();
-   dispatch(postEmail(email));
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+
+    const sanitizedEmail = DOMPurify.sanitize(email);
+
+    if (!isValidEmail(sanitizedEmail)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    dispatch(postEmail(sanitizedEmail));
+  };
+
+  const isValidEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  if (error) {
+    alert(error);
   }
-
-   if (error) {
-      alert(error);
-   }
 
   return (
     <div className="relative mt-14">
-      <img src={BannerImage} alt="banner-image" className="w-full lg:h-full h-[350px] object-cover" />
+      <img
+        src={BannerImage}
+        alt="banner-image"
+        className="w-full lg:h-full h-[350px] object-cover"
+      />
 
       <div className="absolute text-center lg:text-start lg:left-2/4 top-1/4 w-full lg:w-1/2 p-5 text-white">
         <h6 className="text-2xl leading-snug lg:text-[40px] font-semibold">
@@ -50,7 +68,11 @@ const BannerComponent: React.FC = (): JSX.Element => {
             placeholder="Enter your email address"
             className="text-black rounded-md px-4 py-2 w-3/5"
           />
-          <button disabled={loading} type="submit" className="whitespace-nowrap bg-[#23262F] text-xs lg:text-xl text-white p-4 px-8 lg:px-5 rounded-md">
+          <button
+            disabled={loading}
+            type="submit"
+            className="whitespace-nowrap bg-[#23262F] text-xs lg:text-xl text-white p-4 px-8 lg:px-5 rounded-md"
+          >
             Shop Now
           </button>
         </form>
