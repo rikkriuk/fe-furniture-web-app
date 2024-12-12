@@ -22,7 +22,7 @@ const StoreComponent: React.FC = (): JSX.Element => {
    }
 
    return (
-      <div className="pl-5 lg:pl-32 py-10 flex flex-col lg:flex-row gap-10 lg:gap-32 mt-40">
+      <div className="pl-5 lg:pl-32 py-10 flex flex-col lg:flex-row gap-10 lg:gap-32 mt-16 lg:mt-40">
          <div className="flex flex-row lg:flex-col items-center lg:items-start justify-between lg:justify-evenly">
             <h4 className="text-2xl lg:text-[40px] font-semibold text-[#23262F] max-w-32 lg:max-w-60">New In Store Now</h4>
             <p className="text-sm lg:text-base text-[#23262F] max-w-52 lg:max-w-64">Get the latest items immediately with promo prices</p>
