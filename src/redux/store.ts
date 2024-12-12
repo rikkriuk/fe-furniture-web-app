@@ -3,6 +3,7 @@ import heroReducer from "./slice/HeroSlice";
 import dataReducer from "./slice/DataSlice";
 import categoryReducer from "./slice/CategorySlice";
 import productReducer from "./slice/ProductSlice";
+import testimonialReducer from "./slice/TestimonialSlice";
 import { useDispatch } from "react-redux";
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
       data: dataReducer,
       category: categoryReducer,
       product: productReducer,
+      testimonial: testimonialReducer,
    }
 })
 
