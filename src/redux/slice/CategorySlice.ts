@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { initialState } from "../../types/Category";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BASE_URL:string = import.meta.env.VITE_BASE_URL;
 
 export const getCategory = createAsyncThunk("category/getCategory", async (_, thunkAPI) => {
    try {

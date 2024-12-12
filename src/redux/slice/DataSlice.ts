@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { initialState } from "../../types/Data";
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BASE_URL:string = import.meta.env.VITE_BASE_URL;
 
 export const getAllData = createAsyncThunk("data/getAllData", async (_, thunkAPI) => {
    try {

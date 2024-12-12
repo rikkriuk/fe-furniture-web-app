@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import heroReducer from "./slice/HeroSlice";
 import dataReducer from "./slice/DataSlice";
 import categoryReducer from "./slice/CategorySlice";
+import productReducer from "./slice/ProductSlice";
 import { useDispatch } from "react-redux";
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
       hero: heroReducer,
       data: dataReducer,
       category: categoryReducer,
+      product: productReducer,
    }
 })
 
