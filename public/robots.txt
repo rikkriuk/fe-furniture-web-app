@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://fe-furniture-web-app.vercel.app/sitemap.xml
