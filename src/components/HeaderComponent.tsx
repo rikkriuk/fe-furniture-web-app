@@ -83,7 +83,7 @@ const HeaderComponent: React.FC = (): JSX.Element => {
       >
         <button
           data-testid="close-button"
-          className="visible lg:hidden absolute bottom-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          className="visible lg:hidden absolute bottom-10 left-1/2 -translate-x-1/2 -translate-y-1/2"
           onClick={handleNavigate}
         >
           <svg
