@@ -95,38 +95,38 @@ const HeaderComponent: React.FC = (): JSX.Element => {
           >
             <path
               d="M24.5324 23.0749L9.35319 7.89567C8.85852 7.401 8.05652 7.401 7.56185 7.89567L7.46757 7.98995C6.97291 8.48461 6.97291 9.28662 7.46757 9.78129L22.6468 24.9605C23.1415 25.4552 23.9435 25.4552 24.4381 24.9605L24.5324 24.8662C25.0271 24.3716 25.0271 23.5696 24.5324 23.0749Z"
-              fill={isScrolled ? "#23262F" : "#FFFFFF"}
+              fill={isOpen ? "#23262F" : "#FFFFFF"}
             />
             <path
               d="M22.6468 7.92511L7.46757 23.1043C6.9729 23.599 6.9729 24.401 7.46757 24.8957L7.56185 24.9899C8.05651 25.4846 8.85852 25.4846 9.35319 24.9899L24.5324 9.81072C25.0271 9.31606 25.0271 8.51405 24.5324 8.01939L24.4381 7.92511C23.9435 7.43044 23.1415 7.43044 22.6468 7.92511Z"
-              fill={isScrolled ? "#23262F" : "#FFFFFF"}
+              fill={isOpen ? "#23262F" : "#FFFFFF"}
             />
           </svg>
         </button>
         <ul className="flex gap-10 lg:gap-14 flex-col lg:flex-row items-center lg:items-start justify-center lg:justify-start w-full h-full">
           <li
-            className={`font-semibold text-base transition-all duration-300 ${
+            className={`${isOpen && "text-black"} font-semibold text-base transition-all duration-300 ${
               isScrolled ? "text-black" : "text-[#FFFFFF]"
             }`}
           >
             <a href="">Home</a>
           </li>
           <li
-            className={`font-normal text-base transition-all duration-300 ${
+            className={`${isOpen && "text-black"} font-normal text-base transition-all duration-300 ${
               isScrolled ? "text-black" : "text-[#FFFFFF]"
             } hover:font-semibold`}
           >
             <a href="">About</a>
           </li>
           <li
-            className={`font-normal text-base transition-all duration-300 ${
+            className={`${isOpen && "text-black"} font-normal text-base transition-all duration-300 ${
               isScrolled ? "text-black" : "text-[#FFFFFF]"
             } hover:font-semibold`}
           >
             <a href="">Feature</a>
           </li>
           <li
-            className={`font-normal text-base transition-all duration-300 ${
+            className={`${isOpen && "text-black"} font-normal text-base transition-all duration-300 ${
               isScrolled ? "text-black" : "text-[#FFFFFF]"
             } hover:font-semibold`}
           >
