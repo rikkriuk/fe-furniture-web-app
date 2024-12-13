@@ -10,6 +10,7 @@ const BannerComponent: React.FC = (): JSX.Element => {
   const data = useSelector((state: { banner: BannerState }) => state.banner);
   const [email, setEmail] = useState<string>("");
   const { succces, loading, error } = data;
+  const [isError, setIsError] = useState<boolean | string>(false);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -24,11 +25,12 @@ const BannerComponent: React.FC = (): JSX.Element => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    setIsError("");
 
     const sanitizedEmail = DOMPurify.sanitize(email);
 
     if (!isValidEmail(sanitizedEmail)) {
-      alert("Please enter a valid email address.");
+      setIsError("Please enter a valid email address.");
       return;
     }
 
@@ -41,7 +43,7 @@ const BannerComponent: React.FC = (): JSX.Element => {
   };
 
   if (error) {
-    alert(error);
+    setIsError(error);
   }
 
   return (
@@ -62,7 +64,7 @@ const BannerComponent: React.FC = (): JSX.Element => {
 
         <form onSubmit={handleSubmit} className="flex mt-6 flex-row gap-4 w-full">
           <input
-            type="email"
+            type="text"
             value={email}
             disabled={loading}
             onChange={(e) => setEmail(e.target.value)}
@@ -79,8 +81,9 @@ const BannerComponent: React.FC = (): JSX.Element => {
             Shop Now
           </button>
         </form>
+        {isError && <p className="text-red-500 mt-4" data-testid="error-message">{isError}</p>}
         {succces && (
-          <p className="text-white text-center mt-4" data-testid="success-message">
+          <p className="text-white text-start mt-4" data-testid="success-message">
             Email added successfully!
           </p>
         )}
