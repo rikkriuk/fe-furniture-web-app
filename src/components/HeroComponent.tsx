@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import DataComponent from "./DataComponent";
 import { useSelector } from "react-redux";
 import { Hero } from "../types/Hero";
@@ -15,7 +17,11 @@ const HeroComponent: React.FC = (): JSX.Element => {
    }, []);
 
    if (loading) {
-      return <div>Loading...</div>;
+      return (
+         <div className="flex items-center justify-center h-screen">
+            <div className="w-16 h-16 border-4 border-green-700 border-t-transparent rounded-full animate-spin"></div>
+         </div>
+      );
    }
 
    if (error) {
@@ -41,7 +47,7 @@ const HeroComponent: React.FC = (): JSX.Element => {
 
          <DataComponent />
       </section>
-   )
-}
+   );
+};
 
 export default HeroComponent;

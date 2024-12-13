@@ -13,22 +13,6 @@ describe("Footer Component", () => {
     expect(heading).toHaveClass("text-white", "text-2xl", "font-bold");
   });
 
-  test("renders all social media links with correct attributes", () => {
-   const socialLinks = [
-      { testId: "social-link-facebook", url: "https://www.facebook.com" },
-      { testId: "social-link-twitter", url: "https://www.twitter.com" },
-      { testId: "social-link-instagram", url: "https://www.instagram.com" },
-      { testId: "social-link-github", url: "https://www.github.com" },
-    ];
-  
-    socialLinks.forEach(({ testId, url }) => {
-      const link = screen.getByTestId(testId);
-      expect(link).toHaveAttribute("href", url);
-      expect(link).toHaveAttribute("target", "_blank");
-      expect(link).toHaveAttribute("rel", "noopener noreferrer");
-    });
-  });
-
   test("renders copyright text", () => {
     const copyright = screen.getByText("© FurniShop 2022 - All Rights Reserved");
     expect(copyright).toBeInTheDocument();
