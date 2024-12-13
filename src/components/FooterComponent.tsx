@@ -7,16 +7,16 @@ export default function Footer() {
         <h6 className="text-white text-2xl font-bold">FurniShop</h6>
 
          <div className="flex justify-center gap-4">
-         <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+         <a data-testid="social-link-facebook" href="https://www.facebook.com" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
             <FaFacebookF className="text-white w-8 h-8 bg-[#3b5998] p-2 rounded-full" />
          </a>
-         <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
+         <a data-testid="social-link-twitter" href="https://www.twitter.com" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
             <FaTwitter className="text-white w-8 h-8 bg-[#1da1f2] p-2 rounded-full" />
          </a>
-         <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+         <a data-testid="social-link-instagram" href="https://www.instagram.com" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
             <FaInstagram className="text-white w-8 h-8 bg-[#e4405f] p-2 rounded-full" />
          </a>
-         <a href="https://www.github.com" target="_blank" rel="noopener noreferrer">
+         <a data-testid="social-link-github" href="https://www.github.com" aria-label="Github" target="_blank" rel="noopener noreferrer">
             <FaGithub className="text-white w-8 h-8 bg-[#333333] p-2 rounded-full" />
          </a>
          </div>
