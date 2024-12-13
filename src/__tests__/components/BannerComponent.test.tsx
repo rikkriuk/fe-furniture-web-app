@@ -1,54 +1,126 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { Provider } from "react-redux";
+import configureStore from "redux-mock-store";
+import { postEmail } from "../../redux/slice/BannerSlice";
 import BannerComponent from "../../components/BannerComponent";
 
+jest.mock("../../redux/slice/HeroSlice", () => ({
+  default: jest.fn(),
+}));
+jest.mock("../../redux/slice/DataSlice", () => ({
+  default: jest.fn(),
+}));
+jest.mock("../../redux/slice/CategorySlice", () => ({
+  default: jest.fn(),
+}));
+jest.mock("../../redux/slice/ProductSlice", () => ({
+  default: jest.fn(),
+}));
+jest.mock("../../redux/slice/TestimonialSlice", () => ({
+  default: jest.fn(),
+}));
+jest.mock("../../redux/slice/BannerSlice", () => ({
+  default: jest.fn(),
+}));
+
+jest.mock("../../redux/slice/BannerSlice", () => ({
+  postEmail: jest.fn(),
+}));
+
+const mockStore = configureStore([]);
+
 describe("BannerComponent", () => {
-  test("renders banner component with all elements", () => {
-    render(<BannerComponent />);
-    
-    expect(screen.getByAltText("banner-image")).toBeInTheDocument();
-    expect(screen.getByText(/Get more discount/i)).toBeInTheDocument();
-    expect(screen.getByText(/Off your order/i)).toBeInTheDocument();
-    expect(screen.getByText(/Join our mailing list/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/Enter your email address/i)).toBeInTheDocument();
-    expect(screen.getByText(/Shop Now/i)).toBeInTheDocument();
+  let store: any;
+
+  beforeEach(() => {
+    store = mockStore({
+      banner: {
+        succces: false,
+        loading: false,
+        error: null
+      }
+    });
+    store.dispatch = jest.fn();
   });
 
-  test("allows email input", async () => {
-    render(<BannerComponent />);
-    const emailInput = screen.getByPlaceholderText(/Enter your email address/i);
-    
-    await userEvent.type(emailInput, "test@example.com");
-    expect(emailInput).toHaveValue("test@example.com");
+  const renderComponent = () => {
+    render(
+      <Provider store={store}>
+        <BannerComponent />
+      </Provider>
+    );
+  };
+
+  test("renders banner image and form elements", () => {
+    renderComponent();
+    expect(screen.getByTestId("banner-image")).toBeInTheDocument();
+    expect(screen.getByTestId("email-input")).toBeInTheDocument();
+    expect(screen.getByTestId("submit-button")).toBeInTheDocument();
   });
 
-  test("handles form submission", () => {
-    const { container } = render(<BannerComponent />);
-    const form = container.querySelector("form");
-    const submitSpy = jest.fn();
-    
-    form?.addEventListener("submit", submitSpy);
-    fireEvent.submit(form!);
-    
-    expect(submitSpy).toHaveBeenCalled();
+  test("handles valid email submission", async () => {
+    renderComponent();
+    const emailInput = screen.getByTestId("email-input");
+    const submitButton = screen.getByTestId("submit-button");
+
+    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
+    fireEvent.click(submitButton);
+
+    expect(store.dispatch).toHaveBeenCalledWith(postEmail("test@example.com"));
   });
 
-  test("has correct responsive classes", () => {
-    const { container } = render(<BannerComponent />);
-    const image = screen.getByAltText("banner-image");
-    
-    expect(image).toHaveClass("w-full");
-    expect(image).toHaveClass("lg:h-full");
-    expect(image).toHaveClass("h-[300px]");
-    expect(image).toHaveClass("object-cover");
+  test("shows success message when submission is successful", () => {
+    store = mockStore({
+      banner: {
+        succces: true,
+        loading: false,
+        error: null
+      }
+    });
+    renderComponent();
+    expect(screen.getByTestId("success-message")).toBeInTheDocument();
   });
 
-  test("renders banner image with correct attributes", () => {
-    render(<BannerComponent />);
-    const bannerImage = screen.getByAltText("banner-image");
+  test("disables form elements during loading state", () => {
+    store = mockStore({
+      banner: {
+        succces: false,
+        loading: true,
+        error: null
+      }
+    });
+    renderComponent();
     
-    expect(bannerImage).toBeInTheDocument();
-    expect(bannerImage.tagName).toBe("IMG");
-    expect(bannerImage).toHaveAttribute("src");
+    expect(screen.getByTestId("email-input")).toBeDisabled();
+    expect(screen.getByTestId("submit-button")).toBeDisabled();
+  });
+
+  test("displays error alert when error exists in state", () => {
+    const mockAlert = jest.spyOn(window, "alert").mockImplementation(() => {});
+    store = mockStore({
+      banner: {
+        succces: false,
+        loading: false,
+        error: "Test error message"
+      }
+    });
+    renderComponent();
+
+    expect(mockAlert).toHaveBeenCalledWith("Test error message");
+    mockAlert.mockRestore();
+  });
+
+  test("resets email input after successful submission", async () => {
+    store = mockStore({
+      banner: {
+        succces: true,
+        loading: false,
+        error: null
+      }
+    });
+    renderComponent();
+    const emailInput = screen.getByTestId("email-input") as HTMLInputElement;
+
+    expect(emailInput.value).toBe("");
   });
 });

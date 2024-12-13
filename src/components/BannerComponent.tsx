@@ -50,6 +50,7 @@ const BannerComponent: React.FC = (): JSX.Element => {
         src={BannerImage}
         alt="banner-image"
         className="w-full lg:h-full h-[350px] object-cover"
+        data-testid="banner-image"
       />
 
       <div className="absolute text-center lg:text-start lg:left-2/4 top-1/4 w-full lg:w-1/2 p-5 text-white">
@@ -67,17 +68,19 @@ const BannerComponent: React.FC = (): JSX.Element => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email address"
             className="text-black rounded-md px-4 py-2 w-3/5"
+            data-testid="email-input"
           />
           <button
             disabled={loading}
             type="submit"
             className="whitespace-nowrap bg-[#23262F] text-xs lg:text-xl text-white p-4 px-8 lg:px-5 rounded-md"
+            data-testid="submit-button"
           >
             Shop Now
           </button>
         </form>
         {succces && (
-          <p className="text-white text-center mt-4">
+          <p className="text-white text-center mt-4" data-testid="success-message">
             Email added successfully!
           </p>
         )}
