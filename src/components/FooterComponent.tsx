@@ -75,7 +75,7 @@ export default function Footer() {
         ))}
       </div>
 
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center mt-10">
         <p className="text-sm text-white">© FurniShop 2022 - All Rights Reserved</p>
       </div>
     </footer>
