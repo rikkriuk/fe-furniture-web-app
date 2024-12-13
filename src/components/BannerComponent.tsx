@@ -21,7 +21,15 @@ const BannerComponent: React.FC = (): JSX.Element => {
       }, 2000);
       return () => clearTimeout(timer);
     }
-  }, [succces, dispatch]);
+  }, [succces]);
+
+  useEffect(() => {
+    if (error) {
+      setIsError(error);
+    } else {
+      setIsError(false);
+    }
+  }, [error]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -41,10 +49,6 @@ const BannerComponent: React.FC = (): JSX.Element => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-
-  if (error) {
-    setIsError(error);
-  }
 
   return (
     <section id="contact-section" className="relative mt-14">

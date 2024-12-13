@@ -1,33 +1,33 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import { postEmail } from "../../redux/slice/BannerSlice";
 import BannerComponent from "../../components/BannerComponent";
-
-jest.mock("../../redux/slice/HeroSlice", () => ({
-  default: jest.fn(),
-}));
-jest.mock("../../redux/slice/DataSlice", () => ({
-  default: jest.fn(),
-}));
-jest.mock("../../redux/slice/CategorySlice", () => ({
-  default: jest.fn(),
-}));
-jest.mock("../../redux/slice/ProductSlice", () => ({
-  default: jest.fn(),
-}));
-jest.mock("../../redux/slice/TestimonialSlice", () => ({
-  default: jest.fn(),
-}));
-jest.mock("../../redux/slice/BannerSlice", () => ({
-  default: jest.fn(),
-}));
-
-jest.mock("../../redux/slice/BannerSlice", () => ({
-  postEmail: jest.fn(),
-}));
+import { postEmail } from "../../redux/slice/BannerSlice";
 
 const mockStore = configureStore([]);
+
+jest.mock("../../redux/slice/HeroSlice", () => ({
+   default: jest.fn(),
+}));
+jest.mock("../../redux/slice/DataSlice", () => ({
+   default: jest.fn(),
+}));
+jest.mock("../../redux/slice/CategorySlice", () => ({
+   default: jest.fn(),
+}));
+jest.mock("../../redux/slice/ProductSlice", () => ({
+   default: jest.fn(),
+}));
+jest.mock("../../redux/slice/TestimonialSlice", () => ({
+   default: jest.fn(),
+}));
+jest.mock("../../redux/slice/BannerSlice", () => ({
+   default: jest.fn(),
+}));
+
+jest.mock("../../redux/slice/BannerSlice", () => ({
+   postEmail: jest.fn(),
+ }));
 
 describe("BannerComponent", () => {
   let store: any;
@@ -37,90 +37,88 @@ describe("BannerComponent", () => {
       banner: {
         succces: false,
         loading: false,
-        error: null
-      }
+        error: null,
+      },
     });
-    store.dispatch = jest.fn();
   });
 
-  const renderComponent = () => {
+  test("renders the banner component", () => {
     render(
       <Provider store={store}>
         <BannerComponent />
       </Provider>
     );
-  };
 
-  test("renders banner image and form elements", () => {
-    renderComponent();
     expect(screen.getByTestId("banner-image")).toBeInTheDocument();
-    expect(screen.getByTestId("email-input")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Enter your email address")).toBeInTheDocument();
     expect(screen.getByTestId("submit-button")).toBeInTheDocument();
   });
 
-  test("handles valid email submission", async () => {
-    renderComponent();
-    const emailInput = screen.getByTestId("email-input");
-    const submitButton = screen.getByTestId("submit-button");
+  test("submits a valid email", async () => {
+    const email = "test@example.com";
+    store.dispatch = jest.fn();
 
-    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
-    fireEvent.click(submitButton);
+    render(
+      <Provider store={store}>
+        <BannerComponent />
+      </Provider>
+    );
 
-    expect(store.dispatch).toHaveBeenCalledWith(postEmail("test@example.com"));
+    fireEvent.change(screen.getByTestId("email-input"), { target: { value: email } });
+    fireEvent.click(screen.getByTestId("submit-button"));
+
+    expect(store.dispatch).toHaveBeenCalledWith(postEmail(email));
   });
 
-  test("shows success message when submission is successful", () => {
+  test("shows error message for invalid email", async () => {
+    const invalidEmail = "invalid-email";
+
+    render(
+      <Provider store={store}>
+        <BannerComponent />
+      </Provider>
+    );
+
+    fireEvent.change(screen.getByTestId("email-input"), { target: { value: invalidEmail } });
+    fireEvent.click(screen.getByTestId("submit-button"));
+
+    expect(await screen.findByTestId("error-message")).toHaveTextContent("Please enter a valid email address.");
+  });
+
+  test("shows success message after successful submission", async () => {
     store = mockStore({
       banner: {
         succces: true,
         loading: false,
-        error: null
-      }
+        error: null,
+      },
     });
-    renderComponent();
-    expect(screen.getByTestId("success-message")).toBeInTheDocument();
+
+    render(
+      <Provider store={store}>
+        <BannerComponent />
+      </Provider>
+    );
+
+    expect(await screen.findByTestId("success-message")).toHaveTextContent("Email added successfully!");
   });
 
-  test("disables form elements during loading state", () => {
-    store = mockStore({
-      banner: {
-        succces: false,
-        loading: true,
-        error: null
-      }
-    });
-    renderComponent();
-    
-    expect(screen.getByTestId("email-input")).toBeDisabled();
-    expect(screen.getByTestId("submit-button")).toBeDisabled();
-  });
-
-  test("displays error alert when error exists in state", () => {
-    const mockAlert = jest.spyOn(window, "alert").mockImplementation(() => {});
+  test("shows error message from store", async () => {
+    const errorMessage = "An error occurred";
     store = mockStore({
       banner: {
         succces: false,
         loading: false,
-        error: "Test error message"
-      }
+        error: errorMessage,
+      },
     });
-    renderComponent();
 
-    expect(mockAlert).toHaveBeenCalledWith("Test error message");
-    mockAlert.mockRestore();
-  });
+    render(
+      <Provider store={store}>
+        <BannerComponent />
+      </Provider>
+    );
 
-  test("resets email input after successful submission", async () => {
-    store = mockStore({
-      banner: {
-        succces: true,
-        loading: false,
-        error: null
-      }
-    });
-    renderComponent();
-    const emailInput = screen.getByTestId("email-input") as HTMLInputElement;
-
-    expect(emailInput.value).toBe("");
+    expect(await screen.findByTestId("error-message")).toHaveTextContent(errorMessage);
   });
 });

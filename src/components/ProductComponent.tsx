@@ -15,7 +15,7 @@ const ProductComponent: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(getProducts({ page: currentPage, limit: 8 }));
-  }, [currentPage, dispatch]);
+  }, [currentPage]);
 
   const handlePrev = (): void => {
     if (currentPage > 1) {
@@ -87,7 +87,7 @@ const ProductComponent: React.FC = (): JSX.Element => {
       </div>
 
       <div className="flex justify-center items-center gap-10 mb-10 lg:text-2xl">
-        <button className={`${currentPage === 1 ? "text-gray-400" : "text-gray-900"}`} onClick={handlePrev} disabled={currentPage === 1}>
+        <button  className={`${currentPage === 1 ? "text-gray-400" : "text-gray-900"}`} onClick={handlePrev} disabled={currentPage === 1}>
           <AiOutlineArrowLeft />
         </button>
 
