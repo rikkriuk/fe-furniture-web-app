@@ -3,7 +3,7 @@ import StoreComponent from "../components/StoreComponent";
 
 const StoreContainer: React.FC = (): JSX.Element => {
    return (
-      <section>
+      <section id="feature-section">
          <StoreComponent />
       </section>
    )

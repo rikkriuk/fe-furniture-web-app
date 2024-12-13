@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 const HeaderComponent: React.FC = (): JSX.Element => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [activeLink, setActiveLink] = useState<string>("Home");
 
   const handleNavigate: () => void = () => {
     setIsOpen(!isOpen);
@@ -81,7 +82,7 @@ const HeaderComponent: React.FC = (): JSX.Element => {
           isOpen ? "translate-x-0" : "translate-x-full"
         } bg-white lg:bg-transparent absolute lg:translate-x-0 lg:static top-0 left-0 lg:w-auto w-full h-screen lg:h-auto transition ease-in duration-150`}
       >
-        <button
+               <button
           data-testid="close-button"
           className="visible lg:hidden absolute bottom-10 left-1/2 -translate-x-1/2 -translate-y-1/2"
           onClick={handleNavigate}
@@ -104,34 +105,28 @@ const HeaderComponent: React.FC = (): JSX.Element => {
           </svg>
         </button>
         <ul className="flex gap-10 lg:gap-14 flex-col lg:flex-row items-center lg:items-start justify-center lg:justify-start w-full h-full">
-          <li
-            className={`${isOpen && "text-black"} font-semibold text-base transition-all duration-300 ${
-              isScrolled ? "text-black" : "text-[#FFFFFF]"
-            }`}
-          >
-            <a href="">Home</a>
-          </li>
-          <li
-            className={`${isOpen && "text-black"} font-normal text-base transition-all duration-300 ${
-              isScrolled ? "text-black" : "text-[#FFFFFF]"
-            } hover:font-semibold`}
-          >
-            <a href="">About</a>
-          </li>
-          <li
-            className={`${isOpen && "text-black"} font-normal text-base transition-all duration-300 ${
-              isScrolled ? "text-black" : "text-[#FFFFFF]"
-            } hover:font-semibold`}
-          >
-            <a href="">Feature</a>
-          </li>
-          <li
-            className={`${isOpen && "text-black"} font-normal text-base transition-all duration-300 ${
-              isScrolled ? "text-black" : "text-[#FFFFFF]"
-            } hover:font-semibold`}
-          >
-            <a href="">Contact</a>
-          </li>
+          {["Home", "About", "Feature", "Contact"].map((link) => (
+            <li
+              key={link}
+              className={`text-base font-normal transition-all duration-300 ${
+                activeLink === link
+                  ? "font-semibold text-[#286F6C]"
+                  : isScrolled
+                  ? "text-black"
+                  : "text-[#FFFFFF]"
+              } hover:font-semibold ${isOpen && "text-black"}`}
+            >
+              <a
+                href={`#${link.toLowerCase()}-section`}
+                onClick={() => {
+                  setActiveLink(link);
+                  setIsOpen(false);
+                }}
+              >
+                {link}
+              </a>
+            </li>
+          ))}
         </ul>
       </nav>
     </header>

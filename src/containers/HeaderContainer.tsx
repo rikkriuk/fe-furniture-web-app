@@ -3,7 +3,7 @@ import HeroComponent from "../components/HeroComponent";
 
 const HeaderContainer: React.FC = (): JSX.Element => {
   return (
-    <section>
+    <section id="home-section">
       <HeroComponent />
     </section>
   );

@@ -47,7 +47,7 @@ const BannerComponent: React.FC = (): JSX.Element => {
   }
 
   return (
-    <div className="relative mt-14">
+    <section id="contact-section" className="relative mt-14">
       <img
         src={BannerImage}
         alt="banner-image"
@@ -83,12 +83,12 @@ const BannerComponent: React.FC = (): JSX.Element => {
         </form>
         {isError && <p className="text-red-500 mt-4" data-testid="error-message">{isError}</p>}
         {succces && (
-          <p className="text-white text-start mt-4" data-testid="success-message">
+          <p className="text-white mt-4" data-testid="success-message">
             Email added successfully!
           </p>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 
